@@ -14,9 +14,6 @@ QuickStart
 [[siteSub]]
 From OPeNDAP Documentation
 
-[[contentSub]][[jump-to-nav]]
-Jump to: link:#column-one[navigation], link:#searchInput[search]
-
 [[mw-content-text]]
 An OPeNDAP Quick Start Guide
 
@@ -93,16 +90,21 @@ regular web browser like Firefox or Safari. This will work, but you
 don’t really want to do it because in binary form, there are about 60
 megabytes of data at that URL.
 
-_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-NOTE: An OPeNDAP server will work with many different clients, some of
+// Removed long lines of underscores that flanked this 'note' and used
+// this syntax instead. jhrg 6/16/16
+
+[NOTE]
+====
+An OPeNDAP server will work with many different clients, some of
 which are supported by the OPeNDAP team, and some of which are supported
 by others. The operation of any individual package is beyond the scope
 of this manual. This guide explains how to use a typical web browser
 such as Firefox, Internet Explorer or Safari to discover information
 about the data that will be useful when analyzing data in _any_ package.
-_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+====
 
- +
+// Removed this '+' sign - don't know why it was included... jhrg 6/16/16
+// +
 A better strategy is to find out some information about the data.
 OPeNDAP has sophisticated methods for subsampling data at a remote site,
 but you need some information about the data first. First, we’ll try
@@ -218,8 +220,9 @@ http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.info
 ....
 
 [[peeking-at-data]]
-[[Peeking_at_Data]]1.1 Peeking at Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[Peeking_at_Data]]
+== Peeking at Data ==
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that we know a little about the shape of the data, and the data
 attributes, let’s look at some of the data.
@@ -281,9 +284,8 @@ missing data flag (32767) as these pixels are probably coincident with
 land (although there can be other reasons for missing data).
 
 [[server-functions-looking-at-geo-referenced-data-using-hyrax]]
-[[Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax]]1.1.1
-Server Functions: Looking at geo-referenced data using Hyrax
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax]]//1.1.1
+== Server Functions: Looking at geo-referenced data using Hyrax ==
 
 There are a number of different DAP servers that have been developed by
 different organizations. Hyrax, the DAP server developed by the OPeNDAP
@@ -344,8 +346,9 @@ example, try
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?geogrid()[…?geogrid()].
 
 [[more-fun-with-server-functions]]
-[[More_fun_with_Server_Functions]]1.1.2 More fun with Server Functions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[more-fun-with-server-functions]]//1.1.2
+=== More fun with Server Functions ===
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Server functions can be composed to form pipelines, feeding the value of
 one function to another. Since the values in this data set are scaled up
@@ -722,135 +725,3 @@ data you find, is beyond the scope of this document. Enjoy.
 Retrieved from
 "http://docs.opendap.org/index.php?title=QuickStart&oldid=10924"
 
-[[catlinks]][[column-one]]
-[[navigation-menu]]
-Navigation menu
-~~~~~~~~~~~~~~~
-
-[[p-cactions]]
-[[views]]
-Views
-^^^^^
-
-* [[ca-nstab-main]]
-+
-link:/index.php/QuickStart[Page]
-* [[ca-talk]]
-+
-/index.php?title=Talk:QuickStart&action=edit&redlink=1[Discussion]
-* [[ca-viewsource]]
-+
-link:/index.php?title=QuickStart&action=edit[View source]
-* [[ca-history]]
-+
-link:/index.php?title=QuickStart&action=history[History]
-
-[[p-personal]]
-[[personal-tools]]
-Personal tools
-^^^^^^^^^^^^^^
-
-* [[pt-login]]
-+
-/index.php?title=Special:UserLogin&returnto=QuickStart[Log in]
-
-[[p-logo]]
-link:/index.php/Home[]
-
-[[p-navigation]]
-[[navigation]]
-Navigation
-^^^^^^^^^^
-
-* [[n-Home]]
-+
-link:/index.php/Home[Home]
-* [[n-Documentation]]
-+
-link:/index.php/Documentation[Documentation]
-* [[n-Developer-Info]]
-+
-link:/index.php/Developer_Info[Developer Info]
-* [[n-Projects]]
-+
-link:/index.php/Development[Projects]
-* [[n-OPULS.2FDAP4]]
-+
-link:/index.php/OPULS_Development[OPULS/DAP4]
-* [[n-Working-Groups]]
-+
-link:/index.php/Working_Groups[Working Groups]
-* [[n-Meetings]]
-+
-link:/index.php/Meetings[Meetings]
-* [[n-Jira]]
-+
-https://opendap.atlassian.net/[Jira]
-* [[n-Git.28hub.29]]
-+
-https://github.com/opendap[Git(hub)]
-* [[n-Document-Templates]]
-+
-link:/index.php/Document_Templates[Document Templates]
-* [[n-help]]
-+
-/index.php/Help:Contents[Help]
-* [[n-Trac-.28retired.29]]
-+
-https://scm.opendap.org/trac/[Trac (retired)]
-* [[n-Subversion-.28retired.29]]
-+
-https://scm.opendap.org/svn/[Subversion (retired)]
-
-[[p-search]]
-[[search]]
-Search
-^^^^^^
-
-[[searchBody]]
- 
-
-[[p-tb]]
-[[tools]]
-Tools
-^^^^^
-
-* [[t-whatlinkshere]]
-+
-/index.php/Special:WhatLinksHere/QuickStart[What links here]
-* [[t-recentchangeslinked]]
-+
-/index.php/Special:RecentChangesLinked/QuickStart[Related changes]
-* [[t-specialpages]]
-+
-/index.php/Special:SpecialPages[Special pages]
-* [[t-print]]
-+
-link:/index.php?title=QuickStart&printable=yes[Printable version]
-* [[t-permalink]]
-+
-link:/index.php?title=QuickStart&oldid=10924[Permanent link]
-* [[t-info]]
-+
-link:/index.php?title=QuickStart&action=info[Page information]
-
-[[footer]]
-[[f-poweredbyico]]
-link://www.mediawiki.org/[image:/skins/common/images/poweredby_mediawiki_88x31.png[Powered
-by MediaWiki,width=88,height=31]]
-
-* [[lastmod]]
-+
-This page was last modified on 5 November 2014, at 20:44.
-* [[viewcount]]
-+
-This page has been accessed 71,765 times.
-* [[privacy]]
-+
-/index.php/OPeNDAP_Documentation:Privacy_policy[Privacy policy]
-* [[about]]
-+
-/index.php/OPeNDAP_Documentation:About[About OPeNDAP Documentation]
-* [[disclaimer]]
-+
-/index.php/OPeNDAP_Documentation:General_disclaimer[Disclaimers]
