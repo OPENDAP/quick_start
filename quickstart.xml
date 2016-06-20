@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <title>QuickStart - OPeNDAP Documentation</title>
+</articleinfo>
+<simpara id="content"><ulink url=""></ulink></simpara>
+<section id="firstHeading">
+<title>QuickStart</title>
+<simpara id="siteSub">From OPeNDAP Documentation</simpara>
+<simpara id="mw-content-text">An OPeNDAP Quick Start Guide</simpara>
+<simpara>This guide to using OPeNDAP’s software was originally written by Tom
+Sgouros</simpara>
+<simpara><ulink url="http://www.opendap.org/">OPeNDAP</ulink> provides software that allows you to
+access data over the internet, from programs that weren’t originally
+designed for that purpose, as well as some that were. While OPeNDAP is
+the original developer of the
+<ulink url="http://www.opendap.org/pdf/ESE-RFC-004v1.1.pdf">Data Access protocol</ulink>
+which its software uses, many other groups have adopted DAP and provide
+compatible clients, servers and software development kits. The DAP is a
+<ulink url="http://earthdata.nasa.gov/our-community/esdswg/standards-process-spg">NASA
+community standard</ulink>; here is the
+<ulink url="http://earthdata.nasa.gov/our-community/esdswg/standards-process-spg/rfc/esds-rfc-004-dap-20">offical
+link</ulink> to the specification.</simpara>
+<literallayout class="monospaced"> +
+With OPeNDAP software, you access data using a URL, just like a URL you
+would use to access a web page. However, before you request any data,
+you need to know how to request it in a form your browser can handle.
+OPeNDAP data is stored in binary form, and by default, it is transmitted
+that way, too.</literallayout>
+<literallayout class="monospaced"> +
+Another thing to consider with an OPeNDAP URL is that a single URL might
+point to an archive containing 50 megabytes of data. You rarely want to
+request the whole thing without knowing a little about it. OPeNDAP
+provides sophisticated sub-sampling capabilities, but you need to know
+something about the data in order to use them.</literallayout>
+<simpara>So here’s what to do if someone gives you a raw URL, and says there’s
+some OPeNDAP data on the other end.</simpara>
+<section id="contents">
+<title>Contents</title>
+<itemizedlist>
+<listitem>
+<simpara>
+<ulink url="#What_To_Do_With_An_OPeNDAP_URL">1 What To Do With An OPeNDAP URL</ulink>
+</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+<ulink url="#Peeking_at_Data">1.1 Peeking at Data</ulink>
+</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+#Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax[1.1.1
+Server Functions: Looking at geo-referenced data using Hyrax]
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#More_fun_with_Server_Functions">1.1.2 More fun with Server
+Functions</ulink>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#Sequence_Data">1.2 Sequence Data</ulink>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#An_Easier_Way">1.3 An Easier Way</ulink>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#Finding_More_OPeNDAP_URLs">2 Finding More OPeNDAP URLs</ulink>
+</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+<ulink url="#GCMD">2.1 GCMD</ulink>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#Web_Interface">2.2 Web Interface</ulink>
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#File_Servers">2.3 File Servers</ulink>
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+<ulink url="#Further_analysis">3 Further analysis</ulink>
+</simpara>
+</listitem>
+</itemizedlist>
+</section>
+</section>
+<section id="what-to-do-with-an-opendap-url">
+<title><anchor id="What_To_Do_With_An_OPeNDAP_URL" xreflabel="[What_To_Do_With_An_OPeNDAP_URL]"/>1 What To Do With An OPeNDAP URL</title>
+<simpara>Suppose someone gives you a hot tip that there’s a lot of good data at:</simpara>
+<literallayout class="monospaced">http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz</literallayout>
+<simpara>This URL points to monthly means of sea surface temperature, worldwide,
+compiled by Richard Reynolds at the Climate Modeling branch of NOAA, but
+pretend you don’t know that yet.</simpara>
+<simpara>The simplest thing you can do with this URL is to download the data it
+points to. You could feed it to an OPeNDAP-enabled data analysis package
+like Ferret, or you could append <emphasis role="strong">.ascii</emphasis>, and feed the URL to a
+regular web browser like Firefox or Safari. This will work, but you
+don’t really want to do it because in binary form, there are about 60
+megabytes of data at that URL.</simpara>
+<note>
+<simpara>An OPeNDAP server will work with many different clients, some of
+which are supported by the OPeNDAP team, and some of which are supported
+by others. The operation of any individual package is beyond the scope
+of this manual. This guide explains how to use a typical web browser
+such as Firefox, Internet Explorer or Safari to discover information
+about the data that will be useful when analyzing data in <emphasis>any</emphasis> package.</simpara>
+</note>
+<simpara>A better strategy is to find out some information about the data.
+OPeNDAP has sophisticated methods for subsampling data at a remote site,
+but you need some information about the data first. First, we’ll try
+looking at the data’s Dataset Descriptor Structure (DDS). This provides
+a description of the &#8220;shape&#8221; of the data, using a vaguely C-like
+syntax. You get a dataset’s DDS by appending <emphasis role="strong">.dds</emphasis> to the
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.dds">URL</ulink>.</simpara>
+<simpara>/index.php/File:Reynolds_dds.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/a/a4/Reynolds_dds.png"/>
+  </imageobject>
+  <textobject><phrase>actual size</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.dds">An OPeNDAP
+DDS(sst.mnmean.nc.gz.dds)</ulink></simpara>
+<simpara>From the DDS shown, you can see that the dataset consists of two
+different pieces:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+A &#8220;Grid&#8221; containing a three-dimensional array of integer values
+(Int16) called sst, and three &#8220;Map&#8221; vectors:
+</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+A 89-element vector called &#8220;lat&#8221;,
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+A 180-element vector called &#8220;lon&#8221;,
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+A 1857-element vector called &#8220;time&#8221;, and
+</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>
+A 1857 by 2 array called &#8220;time_bnds&#8221;.
+</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The Grid is a special OPeNDAP data type that includes a multidimensional
+array, and map vectors that indicate the independent variable values.
+That is, you can use a Grid to store an array where the rows are not at
+regular intervals. Here’s a diagram of a simple grid:</simpara>
+<simpara>/index.php/File:Gridpts.gif[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/d/d4/Gridpts.gif"/>
+  </imageobject>
+  <textobject><phrase>Gridpts.gif</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara>A Grid</simpara>
+<simpara>The array part of the grid (like <emphasis role="strong">sst</emphasis> in the example above) would
+contain the data points measured at each one of the squares, the X map
+vector would contain the horizontal positions of the columns (like the
+<emphasis role="strong">lon</emphasis> vector above), and the Y map vector would contain the vertical
+positions of the rows (like the <emphasis role="strong">lat</emphasis> vector above).</simpara>
+<simpara>Of course you can also use a Grid to store arrays where the columns and
+rows are at regular intervals, and you’ll often see OPeNDAP data stored
+that way.</simpara>
+<simpara>(The other special OPeNDAP data type worth worrying about is the
+<emphasis>Sequence</emphasis> . You’ll see more about them later. There are also
+<emphasis>Structures</emphasis> for representing arbitrary hierarchies.)</simpara>
+<simpara>You can see from the DDS that the Reynolds data is in a 89x180x1857
+element grid, and the dimensions of the Grid are called &#8220;lat&#8221;,
+&#8220;lon&#8221;, and &#8220;time&#8221;. This is suggestive, but not as helpful as one
+could wish. To find out more about what the data <emphasis>is</emphasis>, you can look at
+the other important OPeNDAP structure: the Data Attribute Structure, or
+DAS. This structure is somewhat similar to the DDS, but contains
+information about the data, such as units and the name of the variable.
+Part of the DAS for the Reynolds data we saw above is shown in the
+figure below. Click
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das">sst.mnmean.nc.gz.das</ulink>
+to see the rest of it.</simpara>
+<simpara>/index.php/File:Reynolds_das.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/f/f9/Reynolds_das.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds das.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das">sst.mnmean.nc.gz.das</ulink></simpara>
+<blockquote>
+<note><simpara>Unlike the DDS, the DAS is populated at the data</simpara></note>
+<simpara>provider’s discretion. Because of this, the quality of the data in it
+(the metadata) varies widely. The data in the Reynolds dataset used in
+this example are COARDS compliant. Other metadata standards you may
+encounter with</simpara>
+<simpara>OPeNDAP data are HDF-EOS, EPIC, FGDC, or no metadata at all.</simpara>
+</blockquote>
+<literallayout class="monospaced"> +
+Now we can tell something more about the data. Apparently the *lat*
+vector contains latitude, in degrees north, and the range is from 89.5
+to -89.5. Since this is a global grid, the latitude values probably go
+in order. We can check this by asking for just the latitude vector, like</literallayout>
+<literallayout class="monospaced">http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?lat</literallayout>
+<simpara>What we’ve done here is to append a constraint expression to the OPeNDAP
+URL, to indicate how to constrain our request for data. Constraint
+expressions can take many forms. This guide will only describe a few of
+them. (You can refer to the
+<ulink url="http://docs.opendap.org/UG/OPeNDAP_User%27s_Guide">User’s Guide</ulink> for more
+complete information about constraint expressions.) Try requesting the
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?time">time</ulink>
+and
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?lon">longitude</ulink>
+vectors to see how this works.</simpara>
+<simpara>According to the DAS, time is kept in &#8220;days since 1800-1-1 00:00:00&#8221;
+in this dataset. This DAS also contains the actual time period recorded
+in the data (19723 to 76214) which, because of your familiarity with the
+Julian calendar, you instantly recognize as beginning January 1, 1854.</simpara>
+<simpara>OPeNDAP provides an <emphasis role="strong">info</emphasis> service that returns all the information
+we’ve seen so far in a single request. The returned information is also
+formatted differently (some would say &#8220;nicer&#8221;), and you can
+occasionally find server-specific documentation here, as well. Some will
+find this the easiest way to read the attribute and structure
+information described above. You can see what information is available
+by appending <emphasis role="strong">.info</emphasis> to a URL, like
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.info">this</ulink>:</simpara>
+<literallayout class="monospaced">http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.info</literallayout>
+</section>
+<section id="Peeking_at_Data">
+<title>Peeking at Data</title>
+<simpara>Now that we know a little about the shape of the data, and the data
+attributes, let’s look at some of the data.</simpara>
+<simpara>You can request a piece of an array with subscripts, just like in a C
+program or in Matlab or many other computer languages. Use a colon to
+indicate a subscript range.</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?time%5b0:6%5d">…sst/mnmean.nc.ascii?time[0:6</ulink>]</simpara>
+<simpara>This
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?time%5b0:6%5d">URL</ulink>
+will produce</simpara>
+<simpara>/index.php/File:Reynolds_time_vector.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/0/01/Reynolds_time_vector.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds time vector.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara>Part of a vector</simpara>
+<simpara>If you are interested in the Reynolds dataset, you are probably more
+interested in the sea surface temperature data than the dependent
+variable vectors. The temperature data is a three-dimensional grid. To
+sample the
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d">sst</ulink>
+Grid, you just add a dimension for time:</simpara>
+<literallayout class="monospaced"> +
+http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d[…sst/mnmean.nc.ascii?sst[0:1][13:16][103:105]]</literallayout>
+<literallayout class="monospaced"> +
+This produces something like:</literallayout>
+<simpara>/index.php/File:Reynolds_sst.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/a/a8/Reynolds_sst.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds sst.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d">Part
+of the Reynolds SST data</ulink></simpara>
+<simpara>Notice that when you ask for part of an OPeNDAP Grid, you get the array
+part along with the corresponding parts of the map vectors.</simpara>
+<simpara>One potentially confusing thing about this request is that we requested
+the time, latitude and longitude by their position in the map vectors,
+but in the returned information they are referenced by their values.
+That is, we asked for the 0th and 1st time values, but these are 19723
+and 19754. We also asked for the 103rd, 104th and 105th longitude
+values, but these are 206, 208, and 210 degrees, respectively. The value
+434 in the return can be referenced as</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b1%5d%5b15%5d%5b103%5d">…sst/mnmean.nc.ascii?sst[1</ulink>[15][103]]</simpara>
+<simpara>Note that the sst values are in Celsius degrees multiplied by 100, as
+indicated by the <emphasis role="strong">scale_factor</emphasis> attribute of the
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das">DAS</ulink>. Further,
+it’s important to remember with this dataset, that the data were
+obtained by calculating spatial and temporal means. Consequently, the
+data points in the <emphasis role="strong">sst</emphasis> array should be ignored when the value is the
+missing data flag (32767) as these pixels are probably coincident with
+land (although there can be other reasons for missing data).</simpara>
+<simpara id="server-functions-looking-at-geo-referenced-data-using-hyrax"><anchor id="Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax" xreflabel="[Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax]"/>//1.1.1
+== Server Functions: Looking at geo-referenced data using Hyrax ==</simpara>
+<simpara>There are a number of different DAP servers that have been developed by
+different organizations. Hyrax, the DAP server developed by the OPeNDAP
+group, supports access to geo-referenced data using lat/lon coordinates.
+You probably noticed that the array and grid indexes used so far are not
+very intuitive. You can see the data are global and are indexed by
+latitude and longitude, but in the previous example we first looked at
+the lat and lon vectors, saw which indexes corresponded to which
+real-world locations and then made our accesses using those indexes.</simpara>
+<simpara>Hyrax supports a small set of functions which can perform these look-up
+operations for you. For example, we could rewrite the example above like
+this:</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%3C19755%22)">…mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,&#8220;19722&lt;time&lt;19755&#8221;)</ulink></simpara>
+<simpara>This produces:</simpara>
+<simpara>/index.php/File:Reynolds_sst_geogrid.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/c/c8/Reynolds_sst_geogrid.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds sst geogrid.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%3C19755%22)">Part
+of the Reynolds SST data</ulink></simpara>
+<simpara>The Syntax for <literal>geogrid()</literal> is:</simpara>
+<simpara>geogrid(grid variable, upper latitude, left longitude, lower latitude,
+right longitude, <emphasis>other expressions</emphasis>)</simpara>
+<simpara>Where <emphasis>other expressions</emphasis> must be enclosed in double quotes, and can be
+one of these forms:</simpara>
+<simpara>variable relop value</simpara>
+<simpara>value relop variable</simpara>
+<simpara>value relop variable relop value</simpara>
+<simpara>&#8220;Relop&#8221; stands for one of the relational operators: &lt;,&gt;,&#8656;,&gt;=,=,!=.
+&#8220;Value&#8221; stands for a numeric constant, and &#8220;Variable&#8221; must be the
+name of one of the grid dimensions. You can use multiple clauses by
+separating them with commas, but each clause must be surrounded by
+double quotes. For example, the following is yet another way to get the
+same return data as the above example.</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%22,%22time%3C19755%22)">…mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,&#8220;19722&lt;time&#8221;,&#8220;time&lt;19755&#8221;)</ulink></simpara>
+<literallayout class="monospaced"> +
+You can figure out which functions are supported by Hyrax by calling the
+server function
+http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?version()[version()].
+This will return an XML document that shows each registered function and
+its version.</literallayout>
+<simpara>To find out how to call each function, you can call it with an empty
+parameter list and get some documentation for that function. For
+example, try
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?geogrid()">…?geogrid()</ulink>.</simpara>
+<simpara id="more-fun-with-server-functions"><anchor id="more-fun-with-server-functions" xreflabel="[more-fun-with-server-functions]"/>//1.1.2
+=== More fun with Server Functions ===</simpara>
+<simpara>Server functions can be composed to form pipelines, feeding the value of
+one function to another. Since the values in this data set are scaled up
+by a factor of 100, we can use the <emphasis>linear_scale()</emphasis> function to scale
+the result using</simpara>
+<literallayout class="monospaced">y = mx + b</literallayout>
+<simpara>where <emphasis role="strong">m</emphasis> is the scale factor and <emphasis role="strong">b</emphasis> offset. The <emphasis>linear_scale()</emphasis>
+function syntax is:</simpara>
+<simpara>linear_scale(variable, scale factor, offset)</simpara>
+<simpara>linear_scale(variable)</simpara>
+<simpara>Use the first form when you want to specify <emphasis role="strong">m</emphasis> and <emphasis role="strong">b</emphasis> explicitly or
+the second form when Hyrax can guess the values using data set metadata
+(you’ll get an error if the server cannot figure out value to use).</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?linear_scale(geogrid(sst,78,0,56,10,%22time=19723%22),0.01,0)">…nc.gz.ascii?linear_scale(geogrid(sst,78,0,56,10,&#8220;time=19723&#8221;),0.01,0)</ulink></simpara>
+<simpara>This produces:</simpara>
+<simpara>/index.php/File:Reynolds_sst_linear_scale_geogrid.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/9/96/Reynolds_sst_linear_scale_geogrid.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds sst linear scale geogrid.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?linear_scale(geogrid(sst,78,0,56,10,%22time=19723%22),0.01,0)">Part
+of the Reynolds SST data, scaled</ulink></simpara>
+<section id="sequence-data">
+<title><anchor id="Sequence_Data" xreflabel="[Sequence_Data]"/>1.2 Sequence Data</title>
+<simpara>Gridded data works well for satellite images, model data, and data
+compilations such as the Reynolds data we’ve just looked at. Other data,
+such as data measured at a specific site, is not so readily stored in
+that form. OPeNDAP provides a data type called a Sequence to store this
+kind of data.</simpara>
+<literallayout class="monospaced"> +
+A Sequence can be thought of as a relational data table, with each
+column representing a different data variable, and each row representing
+a different measurement of a set of values (also called an
+``instance''). For example, an ocean temperature profile can be stored
+as a Sequence with two columns: pressure and temperature. Each
+measurement is a pressure and a temperature, and is contained in one
+row. A weather station’s data can be stored as a Sequence with time in
+one column, and each weather variable occupying another column.</literallayout>
+<simpara>You can find a good example of a Sequence at:</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.info">http://test.opendap.org/dap/data/ff/gsodock.dat</ulink></simpara>
+<simpara>This is a 24-hour record of measurements at a weather station on a dock
+in Rhode Island. Each record consists of a dozen different variables
+including air temperature, wind speed, and direction, as well as depth,
+temperature and salinity of the water. The data is arranged into 144
+measurements of each of the twelve variables.</simpara>
+<simpara>Ask for the DDS, and you’ll see the twelve variables, all contained in a
+Sequence called URI_GSO-Dock:</simpara>
+<simpara>/index.php/File:Gsodock-dds.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/7/71/Gsodock-dds.png"/>
+  </imageobject>
+  <textobject><phrase>Gsodock-dds.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.dds">A DDS for Sequence
+data</ulink></simpara>
+<simpara>The DAS contains the units for each data type, and a little other
+information:</simpara>
+<simpara>/index.php/File:Gsodock-das.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/8/85/Gsodock-das.png"/>
+  </imageobject>
+  <textobject><phrase>Gsodock-das.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.das">A DAS for Sequence
+data</ulink></simpara>
+<simpara>To select which data you want from a server, use a constraint
+expression, just as you did with the gridded data above. Now, though,
+the constraint contains two kinds of clauses. One is a list of variables
+you wish to have returned, and the other is the conditions under which
+they should be returned. The first is called the <emphasis role="strong">projection</emphasis> clause and
+the second the <emphasis role="strong">selection</emphasis> clause.</simpara>
+<simpara>For example, if you want to see salinity data read after noon that day,
+try this:</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.ascii?URI_GSO-Dock.Salinity&amp;URI_GSO-Dock.Time%3E35234.5">…gsodock.dat.ascii?URI_GSO-Dock.Salinity&amp;URI_GSO-Dock.Time&gt;35234.5</ulink></simpara>
+<literallayout class="monospaced"> +
+Selection clauses can be stacked endlessly against a projection clause,
+allowing all the flexibility most people need to sample data files.
+Here’s an example of applying two conditions:</literallayout>
+<simpara><ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.ascii?URI_GSO-Dock.Salinity&amp;URI_GSO-Dock.Time%3E35234.5&amp;URI_GSO-Dock.Depth%3E2">…gsodock.dat.ascii?URI_GSO-Dock.Salinity&amp;URI_GSO-Dock.Time&gt;35234.5&amp;URI_GSO-Dock.Depth&gt;2</ulink></simpara>
+<simpara>Try it yourself with three or four conditions, or more.</simpara>
+</section>
+<section id="an-easier-way">
+<title><anchor id="An_Easier_Way" xreflabel="[An_Easier_Way]"/>1.3 An Easier Way</title>
+<simpara>OPeNDAP also includes a way to sample data that makes writing a
+constraint expression somewhat easier. Append <emphasis role="strong">.html</emphasis> to the URL, and
+you get a form that directs you to add information to sample the data:
+<ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html">…sst.mnmean.nc.html</ulink></simpara>
+<simpara>Sending a URL ending in <emphasis role="strong">.html</emphasis> returns a form like this:</simpara>
+<simpara>/index.php/File:Reynolds_ifh.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/0/05/Reynolds_ifh.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds ifh.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html">The
+OPeNDAP Dataset Access Form</ulink></simpara>
+<simpara>It’s useful to have a browser window open with one of these query forms
+in it while you read this section. Right or Control click
+<ulink url="http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html">here</ulink> to
+bring up a copy of the form to use while you read.</simpara>
+<literallayout class="monospaced"> +
+Near the top of the page, you’ll see a box entitled ``Data URL''. At
+this point, if you’ve been following along, it should look pretty
+familiar. If you’re just jumping in, it’s the OPeNDAP URL connected to
+the data we’re interested in, but unsampled (that is, there’s no
+constraint expression on it).</literallayout>
+<literallayout class="monospaced"> +
+Moving down the page, there is a list of ``Global Attributes'', which is
+really just for your perusal. There’s not much to be done with this, but
+it is often helpful information.</literallayout>
+<literallayout class="monospaced"> +
+The important part of the page is the ``Variables'' section. For each
+variable in the dataset, you’ll see the data description (something like
+``Array of 32 bit Reals [lat = 0..88]''), a checkbox, a text input box,
+and a list of the variable’s attributes. If you click on the checkbox,
+you’ll see the variable’s array bounds appear in the text box, and
+you’ll see the variable appear in a constraint expression appended to
+the Data URL at the top of the page. If you edit the array bounds in the
+text box, hitting ``enter'' will place your edits in the Data URL box.</literallayout>
+<literallayout class="monospaced"> +
+In the unlikely event you dare try all this without your documentation
+along, there’s a *Show Help* button up near the top of the page.
+Clicking there will show you instructions about how to proceed.</literallayout>
+<blockquote>
+<note><simpara>You’ll see a &#8220;stride&#8221; mentioned. This is another way to</simpara></note>
+<simpara>subsample an OPeNDAP array or Grid. Asking for <emphasis role="strong">lat[0:4]</emphasis> gets you the
+first five members of the <emphasis role="strong">lat</emphasis> array. Adding a stride value allows you
+to skip array values. Asking for <emphasis role="strong">lat[0:2:10]</emphasis> gets you every second
+array value between 0 and</simpara>
+<simpara>10: 0, 2, 4, 6, 8, 10.</simpara>
+</blockquote>
+<simpara>Move on down the variable list, editing your request, and experiment
+with adding and changing variable requests.</simpara>
+<simpara>When you have a request you’d like to make, look at the buttons at the
+top of the page.</simpara>
+<simpara>/index.php/File:Reynolds_ifh_Action.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/e/ea/Reynolds_ifh_Action.png"/>
+  </imageobject>
+  <textobject><phrase>Reynolds ifh Action.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara>Dataset Access Form Detail</simpara>
+<simpara>You can click on <emphasis role="strong">Get ASCII</emphasis>, and the data request will appear in a
+browser window, in comma-separated form. The <emphasis role="strong">Binary (DAP) Object</emphasis>
+button will save a binary data file on your local disk, and the <emphasis role="strong">Get as
+NetCDF</emphasis> will save the file in netCDF format on your local disk. (You can
+read either of these later with several OPeNDAP clients, by giving it
+the file name instead of a URL.)</simpara>
+<simpara>The OPeNDAP Data Access Form interface works for Sequence data as well
+as Grids. However, since Sequence constraint expressions look different
+than Grid expressions, the form looks slightly different, too. You can
+see that the variable selection boxes allow you to enter relational
+expressions for each variable. Beside that, however, the function is
+exactly the same.</simpara>
+<simpara>/index.php/File:Gsodock-html.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/d/d9/Gsodock-html.png"/>
+  </imageobject>
+  <textobject><phrase>Gsodock-html.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara>Dataset Access Form for Sequence Data (detail)</simpara>
+<simpara>Click <ulink url="http://test.opendap.org/dap/data/ff/gsodock.dat.html">here</ulink> to see
+a copy of a Sequence form. Click the checkboxes to choose which data
+types you want returned, and then add constraint expressions as desired.
+This data file contains a day’s record of changing water properties off
+a dock in Rhode Island. If you click the <emphasis>Depth</emphasis> and <emphasis>Time</emphasis> boxes (as in
+the figure), you’ll get a record of the tide going in and out twice. You
+can add conditions by entering values in the text boxes. See what you
+get when you limit the selection to records where the Depth is greater
+than 2 meters.</simpara>
+<blockquote>
+<note><simpara>The OPeNDAP project supports the server standard and also</simpara></note>
+<simpara>provides server software. Other groups also provide server software.
+This means that not all OPeNDAP servers support all the OPeNDAP
+functionality. There are a few OPeNDAP servers out there in the world
+that only support the bare minimum required by the standard. That
+minimum is to respond to queries for the DDS, DAS, and (binary) data.
+The ASCII data and the web access form are optional add-ons that are</simpara>
+<simpara>not required for the basic OPeNDAP function.</simpara>
+</blockquote>
+</section>
+</section>
+<section id="finding-more-opendap-urls">
+<title><anchor id="Finding_More_OPeNDAP_URLs" xreflabel="[Finding_More_OPeNDAP_URLs]"/>2 Finding More OPeNDAP URLs</title>
+<simpara>The OPeNDAP package was developed to improve ways to share data among
+scientists. Many times, data comes in the form of a URL enclosed in an
+email message. But there are several other ways to find data served by
+OPeNDAP servers.</simpara>
+<section id="gcmd">
+<title><anchor id="GCMD" xreflabel="[GCMD]"/>2.1 GCMD</title>
+<simpara>The <ulink url="http://gcmd.gsfc.nasa.gov">Global Change Master Directory</ulink> is a
+source of a huge amount of earth science data. They now catalog OPeNDAP
+URLs for the datasets that have them. You can search on &#8220;OPeNDAP&#8221;
+right from the main page to find many of these datasets. Try that
+search, then click on one of the data set names that returns, and look
+at the bottom of the resulting Set Description <emphasis>page, under the heading
+``Related</emphasis> URL.</simpara>
+<simpara>If you make that search, check the list for the Reynolds data from
+chapter~1; it should be there.</simpara>
+<literallayout class="monospaced">+</literallayout>
+</section>
+<section id="web-interface">
+<title><anchor id="Web_Interface" xreflabel="[Web_Interface]"/>2.2 Web Interface</title>
+<simpara>This is a little bit sneaky. Many sites that serve one OPeNDAP dataset
+also serve others. The OPeNDAP web interface (if it’s enabled by the
+site) allows you to check the directory structure for other datasets.
+For example, let’s look at the
+<ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.html">Reynolds data</ulink>
+we saw previously:</simpara>
+<literallayout class="monospaced">+</literallayout>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.html">http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.html</ulink></simpara>
+<literallayout class="monospaced"> +
+If we use the same URL, but without the file name at the end, we can
+browse the directory of data:</literallayout>
+<literallayout class="monospaced"> +
+http://test.opendap.org/dap/data/nc/</literallayout>
+<literallayout class="monospaced"> +
+The OPeNDAP server checks to see whether the URL is a directory, and if
+so, it generates a directory listing, like
+http://test.opendap.org/dap/data/nc/[this:]</literallayout>
+<simpara>/index.php/File:Test.oopendap.org_directory_view.png[<inlinemediaobject>
+  <imageobject>
+  <imagedata fileref="/images/9/9e/Test.oopendap.org_directory_view.png"/>
+  </imageobject>
+  <textobject><phrase>Test.oopendap.org directory view.png</phrase></textobject>
+</inlinemediaobject>]</simpara>
+<simpara><ulink url="http://test.opendap.org/dap/data/nc/">Web Interface Index Listing</ulink></simpara>
+<simpara>You can see from the directory listing that the monthly mean dataset
+we’ve been looking at is accompanied by a host of other datasets. The
+site you’re looking at is our test data site - we use these datasets to
+run many of our nightly tests. All of the files in the the <emphasis>/data/nc</emphasis>
+directory are stored in NetCDF files; other directories under <emphasis>/data</emphasis>
+hold data stored in other file types.</simpara>
+<blockquote>
+<simpara><emphasis role="strong">Note:</emphasis> In general, this list is produced by an</simpara>
+<simpara>OPeNDAP server and this feature works on all servers. However, it only
+really understands OPeNDAP data files, so other file types will simply
+be sent without any interpretation. This can be useful if the &#8216;other
+file&#8217; happens to be a README or other documentation file since this
+makes it simple to serve data stored in files and documented using plain
+text files - essentially the person or organization</simpara>
+<simpara>providing data doesn’t need to do anything besides
+<ulink url="/index.php/Hyrax">installing the server</ulink>.</simpara>
+</blockquote>
+</section>
+<section id="file-servers">
+<title><anchor id="File_Servers" xreflabel="[File_Servers]"/>2.3 File Servers</title>
+<simpara>Some datasets you’ll find are actually lists of other datasets. These
+are called <emphasis>file servers</emphasis> and are themselves OPeNDAP datasets, organized
+as a Sequence, containing URLs with some other identifying data (often
+time). You can request the entire dataset, or subsample it just like any
+other OPeNDAP dataset.</simpara>
+<simpara>NASA’s atmospheric composition data information services maintains some
+OPeNDAP file servers:</simpara>
+<simpara><ulink url="http://acdisc.sci.gsfc.nasa.gov/opendap/catalog/DatapoolCatalog/AIRS/contents.html">http://acdisc.sci.gsfc.nasa.gov/opendap/catalog/DatapoolCatalog/AIRS/contents.html</ulink></simpara>
+<simpara>Try selecting one of the datasets listed in the above, and look at the
+DDS and DAS of that dataset. You’ll see it’s a list of OPeNDAP URLs
+(called <emphasis role="strong">DODS_URL</emphasis> here), labeled with the date of measurement. If you
+go to the
+<ulink url="http://acdisc.sci.gsfc.nasa.gov/opendap/catalog/DatapoolCatalog/AIRS/AIRX3C2M_005-cat.dat.html">html
+form</ulink> for one of them, and click on the <emphasis role="strong">DODS_URL</emphasis> checkbox to get a
+list of URLs, and then add some conditions (try limiting the files to
+data from 2003), and click <emphasis role="strong">Get ASCII</emphasis>. Now you can cut and paste the
+resulting URLs to get more data.</simpara>
+<literallayout class="monospaced">+</literallayout>
+</section>
+</section>
+<section id="further-analysis">
+<title><anchor id="Further_analysis" xreflabel="[Further_analysis]"/>3 Further analysis</title>
+<simpara>This guide is about forming an OPeNDAP URL. After you have figured out
+how to request the data, there are a variety of things you can do with
+it. (OPeNDAP software mentioned here is available from the
+<ulink url="http://www.opendap.org">OPeNDAP Home Page</ulink> .)</simpara>
+<literallayout class="monospaced">+</literallayout>
+<itemizedlist>
+<listitem>
+<simpara>
+Use a generic web client like <emphasis role="strong">geturl</emphasis> (a standard part of the OPeNDAP
+package), the free programs
+<ulink url="http://www.gnu.org/manual/wget-1.5.3/html_mono/wget.html">wget</ulink> or
+<ulink url="http://lynx.browser.org">lynx</ulink>, or even a browser like <emphasis role="strong">Netscape
+Navigator</emphasis> or <emphasis role="strong">Internet Explorer</emphasis> to download data into a local data
+file. To be able to use the data further, you will probably have to
+download the ASCII version by using the <emphasis role="strong">.ascii</emphasis> suffix on the URL, as
+in the examples shown.
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+There are pre-packaged OPeNDAP clients available that can download
+binary OPeNDAP data from the web into a useful form. As of today,
+command line clients (<emphasis role="strong">loaddods</emphasis>) are available for the Matlab and IDL
+data analysis environments, with which you can download OPeNDAP data
+directly into IDL or Matlab objects.
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+The <ulink url="http://ferret.wrc.noaa.gov/Ferret">Ferret</ulink> and
+<ulink url="http://www.iges.org/grads/">GrADS</ulink> free data analysis packages both
+support OPeNDAP. You can use these for downloading OPeNDAP data, and for
+examining it afterwards. (There are limitations. As of \today , Ferret
+can not read datasets served as Sequence data.)
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+The Matlab analysis package also supports an OPeNDAP client attached
+to a graphical user interface. You can use the GUI to create a
+constrained OPeNDAP URL, and download the data directly into Matlab. The
+<ulink url="http://www.opendap.org/user/mgui-html/mgui.html">The OPeNDAP Matlab GUI</ulink>
+contains more information about the Matlab GUI client.
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+If you have a data analysis program or package that you like, you can
+look into the possibility of linking that package to the OPeNDAP toolkit
+library, in effect making your program into a web-capable OPeNDAP
+client. OPeNDAP libraries exist to mimic the behavior of the
+<ulink url="http://www.unidata.ucar.edu/software/netCDF/">netcdf</ulink>,
+<ulink url="http://www.hdfgroup.org/">HDF</ulink> and <ulink url="http://www1.whoi.edu/jgofs.html">JGOFS</ulink>
+data access APIs. If your program already uses one of these APIs,
+getting it to run with OPeNDAP may be as simple as changing the
+libraries to which you link it. The
+<ulink url="http://www.opendap.org/user/guide-html/guide.html">The OPeNDAP User
+Guide</ulink> describes how to do this, and the
+<ulink url="http://www.opendap.org/api/pguide-html/pguide.html">The OPeNDAP Toolkit
+Programmer’s Guide</ulink> describes how you can use the OPeNDAP toolkit
+directly to create a new application that doesn’t use one of the
+established data access APIs.
+</simpara>
+</listitem>
+</itemizedlist>
+<simpara>The use of these clients, like the ways in which you can analyze the
+data you find, is beyond the scope of this document. Enjoy.</simpara>
+<simpara>Retrieved from
+"http://docs.opendap.org/index.php?title=QuickStart&amp;oldid=10924"</simpara>
+</section>
+</article>
