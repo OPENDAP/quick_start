@@ -8,18 +8,22 @@ QuickStart - OPeNDAP Documentation
 link:[]
 
 [[firstHeading]]
-QuickStart
-----------
+== QuickStart ==
+// ----———
+// reformatted as 2nd level, not sure lb
 
 [[bodyContent]]
 [[siteSub]]
-From OPeNDAP lsDocumentation
+// From OPeNDAP Documentation
+// deleted as was showing vs.
+// not showing in original
 
 [[mw-content-text]]
-An OPeNDAP Quick Start Guide
+An OPeNDAP QuickStart Guide
+// quick start to quickstart lb 6/21/16
 
 This guide to using OPeNDAP’s software was originally written by Tom
-Sgouros
+Sgouros.
 
 http://www.opendap.org/[OPeNDAP] provides software that allows you to
 access data over the internet, from programs that weren’t originally
@@ -33,7 +37,8 @@ community standard]; here is the
 http://earthdata.nasa.gov/our-community/esdswg/standards-process-spg/rfc/esds-rfc-004-dap-20[offical
 link] to the specification.
 
-// removed + sign here, think it added an extra space lb 6/20/16 //
+// removed + sign here, think it added an extra space lb 6/20/16
+// got monospaced text lb 6/22/16
 // +
 With OPeNDAP software, you access data using a URL, just like a URL you
 would use to access a web page. However, before you request any data,
@@ -41,8 +46,9 @@ you need to know how to request it in a form your browser can handle.
 OPeNDAP data is stored in binary form, and by default, it is transmitted
 that way, too.
 
- // removed + sign here, think it added an extra space lb 6/20/16 //
- // + 
+// removed + sign here, think it added an extra space lb 6/20/16
+// got monospaced text lb 6/22/16
+// + 
 Another thing to consider with an OPeNDAP URL is that a single URL might
 point to an archive containing 50 megabytes of data. You rarely want to
 request the whole thing without knowing a little about it. OPeNDAP
@@ -59,24 +65,29 @@ Contents
 ~~~~~~~~
 
 * link:#What_To_Do_With_An_OPeNDAP_URL[1 What To Do With An OPeNDAP URL]
-** link:#Peeking_at_Data[1.1 Peeking at Data]
-*** #Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax[1.1.1
-Server Functions: Looking at geo-referenced data using Hyrax]
-*** link:#More_fun_with_Server_Functions[1.1.2 More fun with Server
+// ** link:#Peeking_at_Data[1.1 Peeking at Data]
+// changed title lb 6/21/16
+** link:#Looking_at_Data[1.1 Looking at Data]
+*** link:#Server_Functions:_Looking_at_Geo-Referenced_Data_using_Hyrax[Server Functions: Looking at Geo-Referenced Data using Hyrax]
+// Corrected capitalization in above title lb 6/21/16
+*** link:#More_with_Server_Functions[More with Server
 Functions]
+// deleted “fun” in above title lb 6/21/16
 ** link:#Sequence_Data[1.2 Sequence Data]
 ** link:#An_Easier_Way[1.3 An Easier Way]
 * link:#Finding_More_OPeNDAP_URLs[2 Finding More OPeNDAP URLs]
 ** link:#GCMD[2.1 GCMD]
 ** link:#Web_Interface[2.2 Web Interface]
 ** link:#File_Servers[2.3 File Servers]
-* link:#Further_analysis[3 Further //// a /////Analysis]
+* link:#Further_Analysis[3 Further Analysis]
 
 // tried reformatting title below lb 6/20/16
 
-[[what-to-do-with-an-opendap-url]]
-[[What_To_Do_With_An_OPeNDAP_URL]]1 What To Do With An OPeNDAP URL
-----
+// [[what-to-do-with-an-opendap-url]]
+// deleted 6/27/16 lb
+// [[What-To-Do-With-An-OPeNDAP-URL]]
+// deleted 6/27/16 lb
+== 1 What To Do With An OPeNDAP URL ==
 
 Suppose someone gives you a hot tip that there’s a lot of good data at:
 
@@ -99,17 +110,17 @@ megabytes of data at that URL.
 // this syntax instead. jhrg 6/16/16
 
 [NOTE]
-====
 An OPeNDAP server will work with many different clients, some of
 which are supported by the OPeNDAP team, and some of which are supported
 by others. The operation of any individual package is beyond the scope
 of this manual. This guide explains how to use a typical web browser
 such as Firefox, Internet Explorer or Safari to discover information
 about the data that will be useful when analyzing data in _any_ package.
-====
-
 // Removed this '+' sign - don't know why it was included... jhrg 6/16/16
 // +
+// eliminated '===' above and below note
+// think it's reading as a filter block lb 6/27/16
+
 A better strategy is to find out some information about the data.
 OPeNDAP has sophisticated methods for subsampling data at a remote site,
 but you need some information about the data first. First, we’ll try
@@ -118,18 +129,22 @@ a description of the ``shape'' of the data, using a vaguely C-like
 syntax. You get a dataset’s DDS by appending *.dds* to the
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.dds[URL].
 
-/index.php/File:Reynolds_dds.png[image:/images/a/a4/Reynolds_dds.png[actual
-size,width=444,height=271]]
+// index.php/File:Reynolds_dds.png[image:/images/a/a4/Reynolds_dds.png[actual
+// size,width=444,height=271]]
+// trying to incorporate new path of image lb 6/21 and 22/16
+.An OPeNDAP DDS
+image::Reynolds_dds.png[An OPeNDAP DDS,444,271,align="center"]
+// .An OPeNDAP DDS changed position lb 7/12/16
 
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.dds[An OPeNDAP
-DDS(sst.mnmean.nc.gz.dds)]
+DDS (sst.mnmean.nc.gz.dds)]
 
 From the DDS shown, you can see that the dataset consists of two
 different pieces:
 
 * A ``Grid'' containing a three-dimensional array of integer values
 (Int16) called sst, and three ``Map'' vectors:
-** A 89-element vector called ``lat'',
+** An 89-element vector called ``lat'',
 ** A 180-element vector called ``lon'',
 ** A 1857-element vector called ``time'', and
 * A 1857 by 2 array called ``time_bnds''.
@@ -139,11 +154,13 @@ array, and map vectors that indicate the independent variable values.
 That is, you can use a Grid to store an array where the rows are not at
 regular intervals. Here’s a diagram of a simple grid:
 
-/index.php/File:Gridpts.gif[image:/images/d/d4/Gridpts.gif[Gridpts.gif,width=174,height=129]]
-
-// inserted the word Simple between A and Grid lb 6/20/16 //
-//A Grid
-A Simple Grid
+//index.php/File:Gridpts.gif[image:/images/d/d4/Gridpts.gif[Gridpts.gif,width=174,
+// height=129]
+// trying new link to figure lb 6/22/16
+.A Simple Grid
+image::Gridpts.gif[A Simple Grid,174,129,align="center"]
+// .A Simple Grid changed position to get figure number
+// lb 7/12/16
 
 The array part of the grid (like *sst* in the example above) would
 contain the data points measured at each one of the squares, the X map
@@ -155,15 +172,15 @@ Of course you can also use a Grid to store arrays where the columns and
 rows are at regular intervals, and you’ll often see OPeNDAP data stored
 that way.
 
-//deleted space in front of period in first sentence lb 6/20/16//
+// deleted space in front of period in first sentence lb 6/20/16//
 
 (The other special OPeNDAP data type worth worrying about is the
 _Sequence//_ . You’ll see more about them later. There are also
 _Structures_ for representing arbitrary hierarchies.)
 
 You can see from the DDS that the Reynolds data is in a 89x180x1857
-element grid, and the dimensions of the Grid are called ``lat'',
-``lon'', and ``time''. This is suggestive, but not as helpful as one
+element grid, and the dimensions of the Grid are called ``lat,’’
+``lon,’’ and ``time.’’ This is suggestive, but not as helpful as one
 could wish. To find out more about what the data __is__, you can look at
 the other important OPeNDAP structure: the Data Attribute Structure, or
 DAS. This structure is somewhat similar to the DDS, but contains
@@ -173,8 +190,12 @@ figure below. Click
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das[sst.mnmean.nc.gz.das]
 to see the rest of it.
 
-/index.php/File:Reynolds_das.png[image:/images/f/f9/Reynolds_das.png[Reynolds
-das.png,width=577,height=711]]
+//index.php/File:Reynolds_das.png[image:/images/f/f9/Reynolds_das.png[Reynolds.das.png// width=577,height=711]]
+// trying new link to figure lb 6/22/16
+.Part of the DAS for the Reynolds Data
+image::Reynolds_das.png[Part of the DAS for the Reynolds Data,577,711,align="center"]
+// .Part of the DAS for the Reynolds Data
+// changed position of title to get figure number lb 7/12/16
 
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das[sst.mnmean.nc.gz.das]
 
@@ -182,18 +203,14 @@ http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das[sst.mnmean.nc.gz.das]
 // this syntax instead. lb 6/20/16
 
 [NOTE]
-====
-//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________//
-Unlike the DDS, the DAS is populated at the data
-provider’s discretion. Because of this, the quality of the data in it
-(the metadata) varies widely. The data in the Reynolds dataset used in
+Unlike the DDS, the DAS is populated at the data provider’s discretion. 
+Because of this, the quality of the data in it (the metadata)
+varies widely. The data in the Reynolds dataset used in
 this example are COARDS compliant. Other metadata standards you may
 encounter with OPeNDAP data are HDF-EOS, EPIC, FGDC, or no metadata at all.
-====
-//_______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-//deleted + in next line, I think it added an extra space lb 6/20/16
- //+
+//  trying to eliminate underline under the work "note" lb 6/22/16
+// deleted '==' above and below note lb 6/27/16
 Now we can tell something more about the data. Apparently the *lat*
 vector contains latitude, in degrees north, and the range is from 89.5
 to -89.5. Since this is a global grid, the latitude values probably go
@@ -232,14 +249,13 @@ http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.info[this]:
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.info
 ....
 
-//changed wording of title lb 6/20/16
-[[looking-at-data]]
-[[Looking-at-Data]]
-== Looking at Data ==
-//[[peeking-at-data]]
-//[[Peeking_at_Data]]
-//== Peeking at Data ==
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// [[looking-at-data]]
+// deleted 6/27/16 lb
+// [[Looking-at-Data]]
+// deleted 6/27/16 lb
+=== 1.1 Looking at Data ===
+// reformatted above title lb 6/27/16
+// ~~~~~~~~~~~~~~~ removed 6/27/16 lb
 
 Now that we know a little about the shape of the data, and the data
 attributes, let’s look at some of the data.
@@ -254,11 +270,13 @@ This
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?time%5b0:6%5d[URL]
 will produce
 
-/index.php/File:Reynolds_time_vector.png[image:/images/0/01/Reynolds_time_vector.png[Reynolds
-time vector.png,width=499,height=138]]
-
-Part of a vector
-
+// index.php/File:Reynolds_time_vector.png[image:/images/0/01/Reynolds_time_vector.png[Reynolds.time
+// vector.png,width=499,height=138]]
+// trying new lb 6/22/16
+.Part of a Vector
+image::Reynolds_time_vector.png[Part of a Vector,499,138,align="center"]
+// .Part of a Vector moved to above to get figure number lb 7/12/16
+// Part of a vector
 If you are interested in the Reynolds dataset, you are probably more
 interested in the sea surface temperature data than the dependent
 variable vectors. The temperature data is a three-dimensional grid. To
@@ -266,19 +284,22 @@ sample the
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d[sst]
 Grid, you just add a dimension for time:
 
-//deleted + sign below, think it added an extra space lb 6/20/16 
 // +
+// removed '+' lb 6/27/16
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d[…sst/mnmean.nc.ascii?sst[0:1][13:16][103:105]]
-
-// deleted + sign below, think it added an extra space lb 6/20/16
 // +
+// removed '+' lb 6/27/16
+
 This produces something like:
 
-/index.php/File:Reynolds_sst.png[image:/images/a/a8/Reynolds_sst.png[Reynolds
-sst.png,width=485,height=253]]
+// index.php/File:Reynolds_sst.png[image:/images/a/a8/Reynolds_sst.png[Reynolds.sst.png,
+// width=485,height=253]]
+// trying new link to figure lb 6/22/16
+.Part of the Reynolds SST Data
+image::Reynolds_sst.png[Part of the Reynolds SST Data,485,253, align="center"]
+// .Figure of Part of the Reynolds SST Data
 
-http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d[Part
-of the Reynolds SST data]
+http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b0:1%5d%5b13:16%5d%5b103:105%5d[Part of the Reynolds SST data]
 
 Notice that when you ask for part of an OPeNDAP Grid, you get the array
 part along with the corresponding parts of the map vectors.
@@ -293,10 +314,8 @@ values, but these are 206, 208, and 210 degrees, respectively. The value
 
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?sst%5b1%5d%5b15%5d%5b103%5d[…sst/mnmean.nc.ascii?sst[1][15][103]]
 
-//reformatted NOTE below lb 6/20/16
-
 [NOTE]
-====
+// ==== removed 6/27/16 lb
 The sst values are in Celsius degrees multiplied by 100, as
 indicated by the *scale_factor* attribute of the
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.das[DAS]. Further,
@@ -305,16 +324,17 @@ obtained by calculating spatial and temporal means. Consequently, the
 data points in the *sst* array should be ignored when the value is the
 missing data flag (32767) as these pixels are probably coincident with
 land (although there can be other reasons for missing data).
-====
+// ==== removed 6/27/16 lb
 
 // changed capitalization in title lb 6/20/16
 // [[server-functions-looking-at-geo-referenced-data-using-hyrax]]
-// [[Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax]]//1.1.1/
-// == Server Functions: Looking at geo-referenced data using Hyrax ==
-
-[[server-functions-looking-at-geo-referenced-data-using-hyrax]]
-[[Server_Functions:_Looking_at_Geo-Referenced_Data_using_Hyrax]]
-==Server Functions: Looking at Geo-Referenced Data using Hyrax ==
+// deleted above lb 6/27/16
+// [[Server_Functions:_Looking_at_geo-referenced_data_using_Hyrax]]
+// deleted above lb 6/27/16
+==== 1.1.1 Server Functions: Looking at Geo-Referenced Data using Hyrax ====
+// ================
+// deleted above '=' lb 6/27/16
+// reformatted title lb 6/27/16
 
 There are a number of different DAP servers that have been developed by
 different organizations. Hyrax, the DAP server developed by the OPeNDAP
@@ -328,20 +348,22 @@ real-world locations and then made our accesses using those indexes.
 Hyrax supports a small set of functions which can perform these look-up
 operations for you. For example, we could rewrite the example above like
 this:
-
 http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%3C19755%22)[…mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,``19722<time<19755'')]
 
 This produces:
 
-/index.php/File:Reynolds_sst_geogrid.png[image:/images/c/c8/Reynolds_sst_geogrid.png[Reynolds
-sst geogrid.png,width=480,height=253]]
+// index.php/File:Reynolds_sst_geogrid.png[image:/images/c/c8/Reynolds_sst_geogrid.png
+// [Reynolds.sst geogrid.png,width=480,height=253]]
+// trying new link to figure lb 6/22/16
+.Part of the Reynolds SST Data
+image::Reynolds_sst_geogrid.png[Part of the Reynolds SST data,480,253,align="center"]
+// .Figure of Part of the Reynolds SST Data moved to above lb 7/12/16
 
-http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%3C19755%22)[Part
-of the Reynolds SST data]
+http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%3C19755%22)[Part of the Reynolds SST data]
 
 The Syntax for `geogrid()` is:
 
-geogrid(grid variable, upper latitude, left longitude, lower latitude,
+geogrid (grid variable, upper latitude, left longitude, lower latitude,
 right longitude, __other expressions__)
 
 Where _other expressions_ must be enclosed in double quotes, and can be
@@ -362,8 +384,8 @@ same return data as the above example.
 
 http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,%2219722%3Ctime%22,%22time%3C19755%22)[…mnmean.nc.gz.ascii?geogrid(sst,62,206,56,210,``19722<time'',``time<19755'')]
 
-// deleted + sign in line below lb 6/20/16
 // +
+// removed '+' lb 6/27/16
 You can figure out which functions are supported by Hyrax by calling the
 server function
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?version()[version()].
@@ -376,13 +398,13 @@ example, try
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.ascii?geogrid()[…?geogrid()].
 
 // changed title below lb 6/20/16
-// [[more-fun-with-server-functions]]
-// [[more-fun-with-server-functions]]//1.1.2
-// === More fun with Server Functions ===
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[[more-with-server-functions]]
-[[more-with-server-functions]]//1.1.2
-=== More with Server Functions ===
+// [[more-with-server-functions]]
+// removed above 6/27/16 lb
+// [[more-with-server-functions]]
+// removed above 6/27/16 lb
+==== 1.1.2 More with Server Functions ====
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^
+//  removed '^' lb 6/27/16
 
 Server functions can be composed to form pipelines, feeding the value of
 one function to another. Since the values in this data set are scaled up
@@ -396,9 +418,9 @@ y = mx + b
 where *m* is the scale factor and *b* offset. The _linear_scale()_
 function syntax is:
 
-linear_scale(variable, scale factor, offset)
+linear_scale (variable, scale factor, offset)
 
-linear_scale(variable)
+linear_scale (variable)
 
 Use the first form when you want to specify *m* and *b* explicitly or
 the second form when Hyrax can guess the values using data set metadata
@@ -408,17 +430,24 @@ http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?linear_scale(geog
 
 This produces:
 
-/index.php/File:Reynolds_sst_linear_scale_geogrid.png[image:/images/9/96/Reynolds_sst_linear_scale_geogrid.png[Reynolds
-sst linear scale geogrid.png,width=636,height=334]]
+// index.php/File:Reynolds_sst_linear_scale_geogrid.png[image:/
+// images/9/96/Reynolds_sst_linear_scale_geogrid.png[Reynolds
+// sst linear scale geogrid.png,width=636,height=334]]
+// trying new link to figure lb 6/22/16
+.Part of the Reynolds SST Data, Scaled
+image::Reynolds_sst_linear_scale_geogrid.png[Part of the Reynolds SST Data, Scaled,636,334,align="left"]
+// .Figure of Part of the Reynolds SST Data, Scaled moved to above lb 7/12/16
 
-http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?linear_scale(geogrid(sst,78,0,56,10,%22time=19723%22),0.01,0)[Part
-of the Reynolds SST data, scaled]
+http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.ascii?linear_scale(geogrid(sst,78,0,56,10,%22time=19723%22),0.01,0)[Part of the Reynolds SST data, scaled]
 
-[[sequence-data]]
-[[Sequence_Data]] //1.2
-=== Sequence Data ===
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-//deleted above repeating text lb 6/20/16
+// deleted some ~ lb 6/20/16
+// [[sequence-data]]
+// deleted above 6/27/16 lb
+// [[Sequence_Data]]
+// deleted above 6/27/16
+=== 1.2 Sequence Data ===
+// ~~~~~~~~~~~~~~~
+//  removed '~' and reformatted lb 6/27/16
 
 Gridded data works well for satellite images, model data, and data
 compilations such as the Reynolds data we’ve just looked at. Other data,
@@ -427,8 +456,7 @@ that form. OPeNDAP provides a data type called a Sequence to store this
 kind of data.
 
 // +
-//deleted + sign in above line lb 6/2-/16
-
+// removed '+' lb 6/27/16
 A Sequence can be thought of as a relational data table, with each
 column representing a different data variable, and each row representing
 a different measurement of a set of values (also called an
@@ -451,18 +479,29 @@ measurements of each of the twelve variables.
 Ask for the DDS, and you’ll see the twelve variables, all contained in a
 Sequence called URI_GSO-Dock:
 
-/index.php/File:Gsodock-dds.png[image:/images/7/71/Gsodock-dds.png[Gsodock-dds.png,width=396,height=333]]
+// index.php/File:Gsodock-dds.png[image:/images/7/71/Gsodock-dds.png[Gsodock-dds.
+// png,width=396,height=333]]
+// trying new link to figure lb 6/22/16
+.A DDS for Sequence Data
+image::Gsodock-dds.png[A DDS for Sequence Data,396,333,align="center"]
+// .Figure of a DDS for Sequence Data moved above lb 7/12/16
 
 http://test.opendap.org/dap/data/ff/gsodock.dat.dds[A DDS for Sequence
-data]
+Data]
 
 The DAS contains the units for each data type, and a little other
 information:
 
-/index.php/File:Gsodock-das.png[image:/images/8/85/Gsodock-das.png[Gsodock-das.png,width=392,height=359]]
+// index.php/File:Gsodock-das.png[image:/images/8/85/Gsodock-das.png[Gsodock-das.
+// png,width=392,height=359]]
+// trying new link to figure lb 6/22/16
+
+.A DAS for Sequence Data
+image::Gsodock-das.png[A DAS for Sequence Data,392,359,align="center"]
+// .Figure of a DAS for Sequence Data moved above lb 7/12/16
 
 http://test.opendap.org/dap/data/ff/gsodock.dat.das[A DAS for Sequence
-data]
+Data]
 
 To select which data you want from a server, use a constraint
 expression, just as you did with the gridded data above. Now, though,
@@ -477,8 +516,7 @@ try this:
 http://test.opendap.org/dap/data/ff/gsodock.dat.ascii?URI_GSO-Dock.Salinity&URI_GSO-Dock.Time%3E35234.5[…gsodock.dat.ascii?URI_GSO-Dock.Salinity&URI_GSO-Dock.Time>35234.5]
 
 // +
-// deleted + sign in line above lb 6/20/16
-
+// removed '+' lb 6/27/16
 Selection clauses can be stacked endlessly against a projection clause,
 allowing all the flexibility most people need to sample data files.
 Here’s an example of applying two conditions:
@@ -487,12 +525,14 @@ http://test.opendap.org/dap/data/ff/gsodock.dat.ascii?URI_GSO-Dock.Salinity&URI_
 
 Try it yourself with three or four conditions, or more.
 
-[[an-easier-way]]
-// [[An_Easier_Way]]// 1.3 
-=== An Easier Way ===
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//reformatted above title lb 6/20/16
-
+// [[an-easier-way]]
+// deleted above 6/27/16 lb
+// [[An_Easier_Way]]
+// deleted above 6/27/16 lb
+=== 1.3 An Easier Way ===
+// ~~~~~~~~~~~~~~~~
+// removed '~'  and reformatted lb 6/27/16
+ 
 OPeNDAP also includes a way to sample data that makes writing a
 constraint expression somewhat easier. Append *.html* to the URL, and
 you get a form that directs you to add information to sample the data:
@@ -500,8 +540,13 @@ http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html[…sst.mnmean.nc.h
 
 Sending a URL ending in *.html* returns a form like this:
 
-/index.php/File:Reynolds_ifh.png[image:/images/0/05/Reynolds_ifh.png[Reynolds
-ifh.png,width=714,height=630]]
+// index.php/File:Reynolds_ifh.png[image:/images/0/05/Reynolds_ifh.png[Reynolds
+// ifh.png,width=714,height=630]]
+// trying new link 6/27/16 lb
+
+.The OPeNDAP Dataset Access Form
+image::Reynolds_ifh.png[OPeNDAP Dataset Access Form,714,630,align="center"]
+// .Figure of the OPeNDAP Dataset Access Form moved above lb 7/12/16
 
 http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html[The
 OPeNDAP Dataset Access Form]
@@ -511,20 +556,19 @@ in it while you read this section. Right or Control click
 http://test.opendap.org/opendap/data/nc/sst.mnmean.nc.gz.html[here] to
 bring up a copy of the form to use while you read.
 
-// +
-// deleted above + sign lb 6/20/16
+// + removed 6/27/16 lb
 Near the top of the page, you’ll see a box entitled ``Data URL''. At
 this point, if you’ve been following along, it should look pretty
 familiar. If you’re just jumping in, it’s the OPeNDAP URL connected to
 the data we’re interested in, but unsampled (that is, there’s no
 constraint expression on it).
 
-// +
+// + removed 6/27/16 lb
 Moving down the page, there is a list of ``Global Attributes'', which is
 really just for your perusal. There’s not much to be done with this, but
 it is often helpful information.
 
-// +
+// + removed 6/27/16 lb
 The important part of the page is the ``Variables'' section. For each
 variable in the dataset, you’ll see the data description (something like
 ``Array of 32 bit Reals [lat = 0..88]''), a checkbox, a text input box,
@@ -534,26 +578,24 @@ you’ll see the variable appear in a constraint expression appended to
 the Data URL at the top of the page. If you edit the array bounds in the
 text box, hitting ``enter'' will place your edits in the Data URL box.
 
- // +
+// +removed 6/27/16 lb
 In the unlikely event you dare try all this without your documentation
 along, there’s a *Show Help* button up near the top of the page.
 Clicking there will show you instructions about how to proceed.
 
-//reformatted NOTE below lb 6/20/16
+// reformatted NOTE below lb 6/20/16
+// removed '==' above and below 'note' and deleted 2 lines of underline
+// lb 6/27/16
 
 [NOTE]
-====
-//_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-// NOTE: // You’ll see a ``stride'' mentioned. This is another way to
-//
-subsample an OPeNDAP array or Grid. Asking for *lat[0:4]* gets you the
-first five members of the *lat* array. Adding a stride value allows you
+You’ll see a ``stride'' mentioned. This is another way to subsample
+an OPeNDAP array or Grid. Asking for *lat[0:4]* gets you the first
+five members of the *lat* array. Adding a stride value allows you
 to skip array values. Asking for *lat[0:2:10]* gets you every second
-array value between 0 and
+array value between 0 and 10: 0, 2, 4, 6, 8, 10.
 
-10: 0, 2, 4, 6, 8, 10.
-====
-// _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ //
+// deleted '==' over and under 'note' and deleted 3.5 lines of
+// underline lb 6/27/16
 
 Move on down the variable list, editing your request, and experiment
 with adding and changing variable requests.
@@ -561,10 +603,12 @@ with adding and changing variable requests.
 When you have a request you’d like to make, look at the buttons at the
 top of the page.
 
-/index.php/File:Reynolds_ifh_Action.png[image:/images/e/ea/Reynolds_ifh_Action.png[Reynolds
-ifh Action.png,width=607,height=87]]
-
-Dataset Access Form Detail
+// index.php/File:Reynolds_ifh_Action.png[image:/images/e/ea/Reynolds_ifh_Action.png[Reynolds
+// ifh Action.png,width=607,height=87]]
+// trying new link to figure lb 6/22/16
+.Dataset Access Form Detail
+image::Reynolds_ifh_Action.png[Dataset Access Form Detail,607,87,align="center"]
+// .Figure of Dataset Access Form Detail moved above lb 7/12/16
 
 You can click on **Get ASCII**, and the data request will appear in a
 browser window, in comma-separated form. The *Binary (DAP) Object*
@@ -580,9 +624,13 @@ see that the variable selection boxes allow you to enter relational
 expressions for each variable. Beside that, however, the function is
 exactly the same.
 
-/index.php/File:Gsodock-html.png[image:/images/d/d9/Gsodock-html.png[Gsodock-html.png,width=392,height=438]]
-
-Dataset Access Form for Sequence Data (detail)
+// index.php/File:Gsodock-html.png[image:/images/d/d9/Gsodock-html.png[Gsodock-
+// html.png,width=392,height=438]]
+// Dataset Access Form for Sequence Data (detail)
+// trying new link to figure lb 6/22/16
+.Dataset Access Form for Sequence Data (Detail)
+image::Gsodock-html.png[Dataset Access Form for Sequence Data (detail),392,438,align="center"]
+// .Figure of Dataset Access Form for Sequence Data (Detail) moved lb 7/12/16
 
 Click http://test.opendap.org/dap/data/ff/gsodock.dat.html[here] to see
 a copy of a Sequence form. Click the checkboxes to choose which data
@@ -594,12 +642,9 @@ can add conditions by entering values in the text boxes. See what you
 get when you limit the selection to records where the Depth is greater
 than 2 meters.
 
-//reformatted NOTE below lb 6/20/16
+// reformatted NOTE below lb 6/20/16
 
 [NOTE]
-====
-// _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-// NOTE:
 The OPeNDAP project supports the server standard and also 
 provides server software. Other groups also provide server software.
 This means that not all OPeNDAP servers support all the OPeNDAP
@@ -608,25 +653,31 @@ that only support the bare minimum required by the standard. That
 minimum is to respond to queries for the DDS, DAS, and (binary) data.
 The ASCII data and the web access form are optional add-ons that are
 not required for the basic OPeNDAP function.
-====
-// _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ //
 
-[[finding-more-opendap-urls]]
-[[Finding_More_OPeNDAP_URLs]]2 Finding More OPeNDAP URLs
-//————————————————————————————
-——-
-//tried reformatting above lb 6/20/16
+// deleted ''==' over and under 'note' lb 6/27/16
+// deleted 3.5 lines of 'underline' lb 6/27/16
+// [[finding-more-opendap-urls]]
+// deleted 6/27/16 lb
+// [[Finding_More_OPeNDAP_URLs]]
+// deleted 6/27/16 lb
+== 2 Finding More OPeNDAP URLs ==
+// reformatted 6/27/16 lb
+
+// tried reformatting above lb 6/20/16, deleted '--' under title 6/27/16
 
 The OPeNDAP package was developed to improve ways to share data among
 scientists. Many times, data comes in the form of a URL enclosed in an
 email message. But there are several other ways to find data served by
 OPeNDAP servers.
 
-// [[gcmd]]
-// [[GCMD]]2.1 GCMD
-//~~~~~~~~~~~~~~~~
-~~~~
-//reformatted title lb 6/20/16
+// [[gcmd]] deleted 6/27/16 lb
+// [[GCMD]] deleted 6/27/16 lb
+=== 2.1 GCMD ===
+// removed '~' and reformatted title
+// lb 6/27/16
+
+// reformatted title lb 6/20/16
+// removed '~' 6/27/16 lb
 
 The http://gcmd.gsfc.nasa.gov[Global Change Master Directory] is a
 source of a huge amount of earth science data. They now catalog OPeNDAP
@@ -640,11 +691,14 @@ If you make that search, check the list for the Reynolds data from
 chapter~1; it should be there.
 
 // +
-
-[[web-interface]]
-[[Web_Interface]]2.2 Web Interface
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~
+// removed '+' lb 6/27/16
+// [[web-interface]]
+// removed above line 6/27/16 lb
+// [[Web_Interface]]
+// removed above line 6/27/16 lb
+=== 2.2 Web Interface ===
+// ~~~~~~~~~~~~~
+// removed '~' lb 6/27/16
 
 This is a little bit sneaky. Many sites that serve one OPeNDAP dataset
 also serve others. The OPeNDAP web interface (if it’s enabled by the
@@ -653,24 +707,27 @@ For example, let’s look at the
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.html[Reynolds data]
 we saw previously:
 
-// +
-
+// + removed 6/27/16 lb
 http://test.opendap.org/dap/data/nc/sst.mnmean.nc.gz.html
 
-// +
+// + removed 6/27/17 lb
 If we use the same URL, but without the file name at the end, we can
 browse the directory of data:
 
-// +
+// + removed 6/27/16 lb
 http://test.opendap.org/dap/data/nc/
 
-// +
+// + removed 6/27/16 lb
 The OPeNDAP server checks to see whether the URL is a directory, and if
 so, it generates a directory listing, like
 http://test.opendap.org/dap/data/nc/[this:]
 
-/index.php/File:Test.oopendap.org_directory_view.png[image:/images/9/9e/Test.oopendap.org_directory_view.png[Test.oopendap.org
-directory view.png,width=714,height=370]]
+// index.php/File:Test.oopendap.org_directory_view.png[image:/images/9/9e/Test.oopendap.org_directory_view.png[Test.oopendap.org
+// directory view.png,width=714,height=370]]
+// trying new link to figure lb 6/22/16
+.A Web Interface Index Listing
+image::Test.oopendap.org_directory_view.png[Web Interface Index Listing,714,370,align="center"]
+// .Figure of a Web Interface Index Listing moved lb 7/12/16
 
 http://test.opendap.org/dap/data/nc/[Web Interface Index Listing]
 
@@ -681,21 +738,26 @@ run many of our nightly tests. All of the files in the the _/data/nc_
 directory are stored in NetCDF files; other directories under _/data_
 hold data stored in other file types.
 
-// reformatted note below lb 6/20/16
-//___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ //
+// removed 4 lines of underline here lb 6/27/16
 // *Note:* 
+
 [NOTE]
-====
+// ====
+// deleted '=' lb 6/27/16
 In general, this list is produced by an OPeNDAP server and this feature works on all servers. However, it only really understands OPeNDAP data files, so other file types will simply be sent without any interpretation. This can be useful if the `other
 file' happens to be a README or other documentation file since this makes it simple to serve data stored in files and documented using plain text files - essentially the person or organization providing data doesn’t need to do anything besides
 link:/index.php/Hyrax[installing the server].
-====
-// ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-[[file-servers]]
-[[File_Servers]]2.3 File Servers
-~~~~
-// shortened tildes above lb 6/20/16
+// ==== deleted '=' lb 6/27/16
+// deleted 3.5 lines of underline lb 6/27/16
+// [[file-servers]]
+//  deleted above lb 6/27/16
+// [[File_Servers]]
+// deleted above lb 6/27/16
+
+=== 2.3 File Servers ===
+
+// reformatted above and removed '~' lb 6/27/16
 
 Some datasets you’ll find are actually lists of other datasets. These
 are called _file servers_ and are themselves OPeNDAP datasets, organized
@@ -718,12 +780,13 @@ list of URLs, and then add some conditions (try limiting the files to
 data from 2003), and click **Get ASCII**. Now you can cut and paste the
 resulting URLs to get more data.
 
- // +
-
-[[further-analysis]]
-[[Further_analysis]]3 Further analysis
-----
-// tried reformatting above title lb 6/20/16
+// [[further-analysis]]
+// deleted above 6/27/16 lb
+// [[Further_Analysis]]
+// deleted above 6/27/16 lb
+== 3 Further Analysis ==
+// reformatted above line 6/27/16 lb
+// tried reformatting above title by eliminating '--' lb 6/20/16
 
 This guide is about forming an OPeNDAP URL. After you have figured out
 how to request the data, there are a variety of things you can do with
@@ -731,7 +794,6 @@ it. (OPeNDAP software mentioned here is available from the
 http://www.opendap.org[OPeNDAP Home Page] .)
 
 // +
-
 * Use a generic web client like *geturl* (a standard part of the OPeNDAP
 package), the free programs
 http://www.gnu.org/manual/wget-1.5.3/html_mono/wget.html[wget] or
@@ -741,7 +803,7 @@ file. To be able to use the data further, you will probably have to
 download the ASCII version by using the *.ascii* suffix on the URL, as
 in the examples shown.
 
-* There are pre-packaged OPeNDAP clients available that can download
+* There are prepackaged OPeNDAP clients available that can download
 binary OPeNDAP data from the web into a useful form. As of today,
 command line clients (**loaddods**) are available for the Matlab and IDL
 data analysis environments, with which you can download OPeNDAP data
@@ -776,8 +838,8 @@ directly to create a new application that doesn’t use one of the
 established data access APIs.
 
 The use of these clients, like the ways in which you can analyze the
-data you find, is beyond the scope of this document. Enjoy.
+data you find, is beyond the scope of this document.
 
-Retrieved from
-"http://docs.opendap.org/index.php?title=QuickStart&oldid=10924"
+// Retrieved from
+// "http://docs.opendap.org/index.php?title=QuickStart&oldid=10924"
 
